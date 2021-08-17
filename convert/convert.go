@@ -52,6 +52,7 @@ type Converter interface {
 	Image2ASCIIString(image image.Image, options *Options) string
 	ImageFile2ASCIIMatrix(imageFilename string, option *Options) []string
 	ImageFile2ASCIIString(imageFilename string, option *Options) string
+	ImageBuf2ASCIIString(imageBuf []byte, option *Options) string
 	Image2PixelASCIIMatrix(image image.Image, imageConvertOptions *Options) [][]ascii.CharPixel
 	ImageFile2PixelASCIIMatrix(image image.Image, imageConvertOptions *Options) [][]ascii.CharPixel
 }
@@ -138,9 +139,18 @@ func (converter *ImageConverter) ImageFile2ASCIIMatrix(imageFilename string, opt
 	return converter.Image2ASCIIMatrix(img, option)
 }
 
-// ImageFile2ASCIIString converts a image file to ascii string
-func (converter *ImageConverter) ImageFile2ASCIIString(imageBuf []byte, option *Options) string {
+// ImageBuf2ASCIIString converts a image file to ascii string
+func (converter *ImageConverter) ImageBuf2ASCIIString(imageBuf []byte, option *Options) string {
 	img, _, err := image.Decode(bytes.NewReader(imageBuf))
+	if err != nil {
+		log.Fatal("image decoding failed : " + err.Error())
+	}
+	return converter.Image2ASCIIString(img, option)
+}
+
+// Image2ASCIIString converts a image file to ascii string
+func (converter *ImageConverter) ImageFile2ASCIIString(imageFilename string, option *Options) string {
+	img, err := OpenImageFile(imageFilename)
 	if err != nil {
 		log.Fatal("image decoding failed : " + err.Error())
 	}
