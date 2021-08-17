@@ -3,9 +3,11 @@ package convert
 
 import (
 	"bytes"
-	"github.com/qeesung/image2ascii/ascii"
 	"image"
 	"image/color"
+
+	"github.com/qeesung/image2ascii/ascii"
+
 	// Support decode jpeg image
 	_ "image/jpeg"
 	// Support deocde the png image
@@ -137,10 +139,10 @@ func (converter *ImageConverter) ImageFile2ASCIIMatrix(imageFilename string, opt
 }
 
 // ImageFile2ASCIIString converts a image file to ascii string
-func (converter *ImageConverter) ImageFile2ASCIIString(imageFilename string, option *Options) string {
-	img, err := OpenImageFile(imageFilename)
+func (converter *ImageConverter) ImageFile2ASCIIString(imageBuf []byte, option *Options) string {
+	img, _, err := image.Decode(bytes.NewReader(imageBuf))
 	if err != nil {
-		log.Fatal("open image failed : " + err.Error())
+		log.Fatal("image decoding failed : " + err.Error())
 	}
 	return converter.Image2ASCIIString(img, option)
 }
