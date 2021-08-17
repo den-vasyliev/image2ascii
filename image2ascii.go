@@ -4,7 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/qeesung/image2ascii/convert"
+	"github.com/den-vasyliev/image2ascii/convert"
 	_ "image/jpeg"
 	_ "image/png"
 	"os"

@@ -6,7 +6,7 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/qeesung/image2ascii/ascii"
+	"github.com/den-vasyliev/image2ascii/ascii"
 
 	// Support decode jpeg image
 	_ "image/jpeg"
